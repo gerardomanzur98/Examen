@@ -1,0 +1,77 @@
+{% extends 'memory_game/base.html' %}
+{% load static %}
+
+{% block title %}Select Level - Memory Game{% endblock %}
+
+{% block content %}
+<div class="level-selection-container">
+    <div class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="display-3 fw-bold text-primary mb-3">Choose Your Challenge</h1>
+            <p class="lead text-muted">Select a difficulty level to start playing</p>
+        </div>
+        
+        <div class="row g-4 justify-content-center">
+            <!-- Basic Level -->
+            <div class="col-md-4">
+                <div class="card level-card border-0 shadow-lg h-100 hover-lift">
+                    <div class="card-body text-center p-5">
+                        <div class="level-icon mb-4">
+                            <span class="display-1">🟢</span>
+                        </div>
+                        <h3 class="card-title fw-bold mb-3">Basic</h3>
+                        <div class="level-details mb-4">
+                            <p class="mb-2"><strong>Attempts:</strong> 6</p>
+                            <p class="mb-2"><strong>Time:</strong> 60 seconds</p>
+                            <p class="mb-2"><strong>Board:</strong> 4x4</p>
+                        </div>
+                        <a href="{% url 'game' 'basic' %}" class="btn btn-success btn-lg w-100">
+                            Play Basic
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Medium Level -->
+            <div class="col-md-4">
+                <div class="card level-card border-0 shadow-lg h-100 hover-lift">
+                    <div class="card-body text-center p-5">
+                        <div class="level-icon mb-4">
+                            <span class="display-1">🟡</span>
+                        </div>
+                        <h3 class="card-title fw-bold mb-3">Medium</h3>
+                        <div class="level-details mb-4">
+                            <p class="mb-2"><strong>Attempts:</strong> 4</p>
+                            <p class="mb-2"><strong>Time:</strong> 60 seconds</p>
+                            <p class="mb-2"><strong>Board:</strong> 4x4</p>
+                        </div>
+                        <a href="{% url 'game' 'medium' %}" class="btn btn-warning btn-lg w-100">
+                            Play Medium
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Advanced Level -->
+            <div class="col-md-4">
+                <div class="card level-card border-0 shadow-lg h-100 hover-lift">
+                    <div class="card-body text-center p-5">
+                        <div class="level-icon mb-4">
+                            <span class="display-1">🔴</span>
+                        </div>
+                        <h3 class="card-title fw-bold mb-3">Advanced</h3>
+                        <div class="level-details mb-4">
+                            <p class="mb-2"><strong>Attempts:</strong> 2</p>
+                            <p class="mb-2"><strong>Time:</strong> 60 seconds</p>
+                            <p class="mb-2"><strong>Board:</strong> 4x4</p>
+                        </div>
+                        <a href="{% url 'game' 'advanced' %}" class="btn btn-danger btn-lg w-100">
+                            Play Advanced
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

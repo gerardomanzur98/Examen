@@ -1,0 +1,84 @@
+{% extends 'memory_game/base.html' %}
+{% load static %}
+
+{% block title %}Game History - Memory Game{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1 class="display-4 fw-bold text-primary mb-2">Game History</h1>
+            <p class="lead text-muted">Complete record of all your games</p>
+        </div>
+    </div>
+    
+    {% if games %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>#</th>
+                                    <th>Date & Time</th>
+                                    <th>Difficulty</th>
+                                    <th>Result</th>
+                                    <th>Time Taken</th>
+                                    <th>Attempts Used</th>
+                                    <th>Max Attempts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for game in games %}
+                                <tr>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ game.created_at|date:"M d, Y H:i:s" }}</td>
+                                    <td>
+                                        <span class="badge 
+                                            {% if game.difficulty == 'basic' %}bg-success
+                                            {% elif game.difficulty == 'medium' %}bg-warning
+                                            {% else %}bg-danger{% endif %} text-capitalize">
+                                            {{ game.difficulty }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {% if game.result == 'win' %}
+                                        <span class="badge bg-success">✓ Win</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">✗ Loss</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ game.time_taken }}s</td>
+                                    <td>{{ game.attempts_used }}</td>
+                                    <td>{{ game.max_attempts }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="col-12">
+            <div class="alert alert-info text-center">
+                <h4>No games played yet!</h4>
+                <p class="mb-3">Start your journey by playing your first game.</p>
+                <a href="{% url 'level_selection' %}" class="btn btn-primary">Play Now</a>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+    
+    <div class="row mt-4">
+        <div class="col-12 text-center">
+            <a href="{% url 'profile' %}" class="btn btn-secondary me-2">← Back to Profile</a>
+            <a href="{% url 'level_selection' %}" class="btn btn-primary">Play Again</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

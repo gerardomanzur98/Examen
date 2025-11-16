@@ -1,0 +1,139 @@
+{% extends 'memory_game/base.html' %}
+{% load static %}
+
+{% block title %}Profile - Memory Game{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="display-4 fw-bold text-primary mb-4">Player Profile</h1>
+        </div>
+    </div>
+    
+    <!-- User Info -->
+    <div class="row mb-4">
+        <div class="col-md-12">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h3 class="card-title">👤 {{ user.username }}</h3>
+                    <p class="text-muted mb-0">{{ user.email }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Statistics -->
+    <div class="row mb-4">
+        <div class="col-12">
+            <h3 class="fw-bold mb-3">📊 Statistics</h3>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-primary">{{ stats.total_games }}</h2>
+                    <p class="text-muted mb-0">Total Games</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-success">{{ stats.total_wins }}</h2>
+                    <p class="text-muted mb-0">Wins</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-danger">{{ stats.total_losses }}</h2>
+                    <p class="text-muted mb-0">Losses</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 col-sm-6 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-info">{{ stats.win_rate }}%</h2>
+                    <p class="text-muted mb-0">Win Rate</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-warning">{{ stats.average_time }}s</h2>
+                    <p class="text-muted mb-0">Average Time</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-6 mb-3">
+            <div class="card text-center shadow-sm">
+                <div class="card-body">
+                    <h2 class="text-primary text-capitalize">{{ stats.most_played_level }}</h2>
+                    <p class="text-muted mb-0">Most Played Level</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Recent Games -->
+    <div class="row">
+        <div class="col-12">
+            <h3 class="fw-bold mb-3">🎮 Recent Games</h3>
+            
+            {% if recent_games %}
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Difficulty</th>
+                                    <th>Result</th>
+                                    <th>Time</th>
+                                    <th>Attempts</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for game in recent_games %}
+                                <tr>
+                                    <td>{{ game.created_at|date:"M d, Y H:i" }}</td>
+                                    <td><span class="badge bg-secondary text-capitalize">{{ game.difficulty }}</span></td>
+                                    <td>
+                                        {% if game.result == 'win' %}
+                                        <span class="badge bg-success">Win</span>
+                                        {% else %}
+                                        <span class="badge bg-danger">Loss</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ game.time_taken }}s</td>
+                                    <td>{{ game.attempts_used }}/{{ game.max_attempts }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <a href="{% url 'game_history' %}" class="btn btn-primary">View Full History</a>
+            </div>
+            {% else %}
+            <div class="alert alert-info">
+                No games played yet. <a href="{% url 'level_selection' %}">Start playing!</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
